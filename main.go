@@ -1,6 +1,7 @@
 package main
 
 import (
+	"lend-api/controllers"
 	"net/http"
 	"os"
 
@@ -20,10 +21,6 @@ func getDBSession() (*mgo.Session, error) {
 	return session, nil
 }
 
-func healthCheck(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusOK)
-}
-
 func main() {
 
 	db, err := getDBSession()
@@ -31,12 +28,16 @@ func main() {
 		log.Fatal(err)
 	}
 
+	asset := controllers.NewAssetController(db.DB("mini_biz"))
+
 	defer db.Close()
 
 	router := mux.NewRouter()
-	router.HandleFunc("/", healthCheck).Methods("GET")
+	router.HandleFunc("/asset/{id}", asset.FindById).Methods("GET")
 
-	listen := "9000"
+	listen := ":9000"
 
-	http.ListenAndServe(listen, handlers.CombinedLoggingHandler(os.Stdout, router))
+	if err := http.ListenAndServe(listen, handlers.CombinedLoggingHandler(os.Stdout, router)); err != nil {
+		log.Fatal(err)
+	}
 }
