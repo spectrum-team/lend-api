@@ -1,0 +1,9 @@
+{
+  "name": "Lend App API: Go",
+  "description": "Go API for lend application",
+  "keywords": [],
+  "image": "heroku/go:1.7",
+  "mount_dir": "src/github.com/spectrum-team/lend-api",
+  "website": "https://github.com/spectrum-team/lend-api",
+  "repository": "https://github.com/spectrum-team/lend-api"
+}
