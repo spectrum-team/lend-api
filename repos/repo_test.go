@@ -11,7 +11,7 @@ var (
 )
 
 func TestRepos(t *testing.T) {
-	session, err := mgo.Dial("localhost")
+	session, err := mgo.Dial("mongodb://spectrum:prestarcosas@ds143030.mlab.com:43030/mini_biz")
 	if err != nil {
 		t.Errorf("Could not connect to the database. %s", err.Error())
 	}
