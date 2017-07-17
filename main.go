@@ -13,7 +13,7 @@ import (
 )
 
 func getDBSession() (*mgo.Session, error) {
-	session, err := mgo.Dial("mongodb://spectrum:prestarcosas@ds143030.mlab.com:43030/mini_biz")
+	session, err := mgo.Dial("localhost:27017")
 	if err != nil {
 		return nil, err
 	}
@@ -33,7 +33,7 @@ func main() {
 	defer db.Close()
 
 	router := mux.NewRouter()
-	router.HandleFunc("/asset/{id}", asset.FindById).Methods("GET")
+	router.HandleFunc("/asset/{id}", asset.FindByID).Methods("GET")
 
 	listen := ":9000"
 
