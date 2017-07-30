@@ -13,7 +13,7 @@ import (
 )
 
 func getDBSession() (*mgo.Session, error) {
-	session, err := mgo.Dial("localhost:27017")
+	session, err := mgo.Dial("mongodb://tavomoya:tavomoya@ds143030.mlab.com:43030/mini_biz")
 	if err != nil {
 		return nil, err
 	}
@@ -35,9 +35,13 @@ func main() {
 	router := mux.NewRouter()
 	router.HandleFunc("/asset/{id}", asset.FindByID).Methods("GET")
 
-	listen := ":9000"
+	listen := os.Getenv("PORT")
 
-	if err := http.ListenAndServe(listen, handlers.CombinedLoggingHandler(os.Stdout, router)); err != nil {
+	if listen == "" {
+		listen = "9000"
+	}
+
+	if err := http.ListenAndServe(":"+listen, handlers.CombinedLoggingHandler(os.Stdout, router)); err != nil {
 		log.Fatal(err)
 	}
 }
