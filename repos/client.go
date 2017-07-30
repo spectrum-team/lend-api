@@ -44,6 +44,7 @@ func (a *Client) Find(query interface{}) ([]*models.Client, error) {
 }
 
 func (a *Client) Insert(client models.Client) error {
+	client.Id = bson.NewObjectId()
 	return a.DB.C("client").Insert(client)
 }
 

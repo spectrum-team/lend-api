@@ -44,6 +44,7 @@ func (a *Document) Find(query interface{}) ([]*models.Document, error) {
 }
 
 func (a *Document) Insert(document models.Document) error {
+	document.Id = bson.NewObjectId()
 	return a.DB.C("document").Insert(document)
 }
 

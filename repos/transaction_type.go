@@ -44,6 +44,7 @@ func (a *TransactionType) Find(query interface{}) ([]*models.TransactionType, er
 }
 
 func (a *TransactionType) Insert(transactionType models.TransactionType) error {
+	transactionType.Id = bson.NewObjectId()
 	return a.DB.C("transaction_type").Insert(transactionType)
 }
 

@@ -44,6 +44,7 @@ func (a *Transaction) Find(query interface{}) ([]*models.Transaction, error) {
 }
 
 func (a *Transaction) Insert(transaction models.Transaction) error {
+	transaction.Id = bson.NewObjectId()
 	return a.DB.C("transaction").Insert(transaction)
 }
 

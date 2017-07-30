@@ -48,6 +48,8 @@ func (a *AssetCategory) Insert(assetCategory models.AssetCategory) error {
 		return errors.New("AssetCategory should have a name")
 	}
 
+	assetCategory.Id = bson.NewObjectId()
+
 	return a.DB.C("asset_category").Insert(assetCategory)
 }
 
