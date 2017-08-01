@@ -35,6 +35,7 @@ func main() {
 	documentType := controllers.NewDocumentTypeController(db.DB("mini_biz"))
 	transaction := controllers.NewTransactionController(db.DB("mini_biz"))
 	transactionType := controllers.NewTransactionTypeController(db.DB("mini_biz"))
+	customer := controllers.NewCustomerController(db.DB("mini_biz"))
 
 	defer db.Close()
 
@@ -81,6 +82,12 @@ func main() {
 	router.HandleFunc("/transactiontype/find", transactionType.Find).Methods("POST")
 	router.HandleFunc("/transactiontype", transactionType.Insert).Methods("POST")
 	router.HandleFunc("/transactiontype", transactionType.Update).Methods("PUT")
+
+	// Customer Routes
+	router.HandleFunc("/customer/{id}", customer.FindByID).Methods("GET")
+	router.HandleFunc("/customer/find", customer.Find).Methods("POST")
+	router.HandleFunc("/customer", customer.Insert).Methods("POST")
+	router.HandleFunc("/customer", customer.Update).Methods("PUT")
 
 	listen := os.Getenv("PORT")
 
